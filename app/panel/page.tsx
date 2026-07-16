@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { getCurrentUserProfile } from "@/lib/dal";
+import {
+  getClientPendingItemsDTO,
+  getProviderPendingItemsDTO,
+} from "@/lib/dto";
 import { AvatarUpload } from "@/components/providers/avatar-upload";
+import { PendingItems } from "@/components/panel/pending-items";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -10,6 +15,11 @@ export default async function PanelPage() {
   const profile = await getCurrentUserProfile();
 
   if (!profile) return null;
+
+  const pendingItems =
+    profile.role === "provider"
+      ? await getProviderPendingItemsDTO(profile.id)
+      : await getClientPendingItemsDTO(profile.id);
 
   return (
     <div>
@@ -21,6 +31,10 @@ export default async function PanelPage() {
           fullName={profile.full_name}
           currentAvatarUrl={profile.avatar_url}
         />
+      </div>
+
+      <div className="mt-6">
+        <PendingItems items={pendingItems} />
       </div>
 
       {profile.role === "provider" ? (

@@ -19,6 +19,15 @@ export function UserMenu({ profile }: { profile: Profile | null }) {
 
   return (
     <div className="flex items-center gap-3">
+      <Link href="/panel/solicitudes" className="text-sm font-medium hover:underline">
+        Solicitudes
+      </Link>
+      <Link href="/panel/agenda" className="text-sm font-medium hover:underline">
+        Agenda
+      </Link>
+      <Link href="/panel/historial" className="text-sm font-medium hover:underline">
+        Historial
+      </Link>
       <Link href="/panel" className="text-sm font-medium hover:underline">
         {profile.full_name || "Mi panel"}
       </Link>

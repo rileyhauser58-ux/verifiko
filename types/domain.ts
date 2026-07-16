@@ -44,10 +44,69 @@ export type Review = {
   rating: number;
   comment: string | null;
   created_at: string;
+  request_id: string;
 };
 
 export type ProviderSearchFilters = {
   categoria?: string;
   comuna?: string;
   q?: string;
+};
+
+export type RequestStatus =
+  | "pending"
+  | "accepted"
+  | "declined"
+  | "completed"
+  | "cancelled";
+
+export type ServiceRequestListItem = {
+  id: string;
+  status: RequestStatus;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  scheduled_at: string | null;
+  counterpart_id: string;
+  counterpart_name: string;
+  counterpart_avatar_url: string | null;
+};
+
+export type ServiceRequestDetail = {
+  id: string;
+  client_id: string;
+  provider_id: string;
+  status: RequestStatus;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  scheduled_at: string | null;
+  client_name: string;
+  client_avatar_url: string | null;
+  provider_name: string;
+  provider_avatar_url: string | null;
+};
+
+export type ChatMessage = {
+  id: string;
+  request_id: string;
+  sender_id: string;
+  body: string;
+  created_at: string;
+};
+
+export type PendingItem = {
+  type: "pending_response" | "upcoming" | "awaiting_review";
+  label: string;
+  href: string;
+};
+
+export type HistoryEntry = {
+  counterpart_id: string;
+  counterpart_name: string;
+  counterpart_avatar_url: string | null;
+  total_requests: number;
+  completed_requests: number;
+  last_interaction_at: string;
+  last_request_id: string;
 };

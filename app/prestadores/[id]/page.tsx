@@ -1,15 +1,17 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
+  getActiveRequestDTO,
   getProviderPublicProfileDTO,
   getProviderReviewsDTO,
-  getUserReviewForProvider,
 } from "@/lib/dto";
 import { getCurrentUserProfile } from "@/lib/dal";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
-import { ReviewForm } from "@/components/providers/review-form";
 import { ReviewList } from "@/components/providers/review-list";
+import { ServiceRequestForm } from "@/components/requests/service-request-form";
 
 type ProviderPageProps = {
   params: Promise<{ id: string }>;
@@ -44,11 +46,8 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
     getCurrentUserProfile(),
   ]);
 
-  let canReview = false;
-  if (profile && profile.id !== id) {
-    const existingReview = await getUserReviewForProvider(id, profile.id);
-    canReview = !existingReview;
-  }
+  const activeRequest =
+    profile && profile.id !== id ? await getActiveRequestDTO(profile.id, id) : null;
 
   const displayName = provider.business_name || provider.full_name;
 
@@ -90,15 +89,20 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
 
       {provider.bio && <p className="mt-6 leading-relaxed">{provider.bio}</p>}
 
+      {profile && profile.id !== id && (
+        <div className="mt-6">
+          {activeRequest ? (
+            <Link href={`/panel/solicitudes/${activeRequest.id}`}>
+              <Button variant="secondary">Ver solicitud enviada</Button>
+            </Link>
+          ) : (
+            <ServiceRequestForm providerId={id} />
+          )}
+        </div>
+      )}
+
       <section className="mt-10">
         <h2 className="mb-4 text-lg font-semibold">Reseñas</h2>
-
-        {canReview && (
-          <div className="mb-6">
-            <ReviewForm providerId={id} />
-          </div>
-        )}
-
         <ReviewList reviews={reviews} />
       </section>
     </div>

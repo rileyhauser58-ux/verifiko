@@ -5,8 +5,8 @@ import { submitReview } from "@/app/actions/reviews";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ReviewForm({ providerId }: { providerId: string }) {
-  const action = submitReview.bind(null, providerId);
+export function ReviewForm({ requestId }: { requestId: string }) {
+  const action = submitReview.bind(null, requestId);
   const [state, formAction, pending] = useActionState(action, undefined);
   const [rating, setRating] = useState(0);
 

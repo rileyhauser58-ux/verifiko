@@ -6,15 +6,11 @@ import { verifySession } from "@/lib/dal";
 import { ReviewSchema, type ReviewFormState } from "@/lib/validations/review";
 
 export async function submitReview(
-  providerId: string,
+  requestId: string,
   _state: ReviewFormState,
   formData: FormData
 ): Promise<ReviewFormState> {
   const { user } = await verifySession();
-
-  if (user.id === providerId) {
-    return { message: "No puedes reseñarte a ti mismo." };
-  }
 
   const validated = ReviewSchema.safeParse({
     rating: formData.get("rating"),
@@ -26,8 +22,23 @@ export async function submitReview(
   }
 
   const supabase = await createClient();
+  const { data: request } = await supabase
+    .from("service_requests")
+    .select("id, client_id, provider_id, status")
+    .eq("id", requestId)
+    .single();
+
+  if (!request || request.client_id !== user.id) {
+    return { message: "No puedes reseñar esta solicitud." };
+  }
+
+  if (request.status !== "completed") {
+    return { message: "Solo puedes reseñar trabajos completados." };
+  }
+
   const { error } = await supabase.from("reviews").insert({
-    provider_id: providerId,
+    request_id: requestId,
+    provider_id: request.provider_id,
     reviewer_id: user.id,
     rating: validated.data.rating,
     comment: validated.data.comment || null,
@@ -35,11 +46,12 @@ export async function submitReview(
 
   if (error) {
     if (error.code === "23505") {
-      return { message: "Ya reseñaste a este prestador." };
+      return { message: "Ya reseñaste este trabajo." };
     }
     return { message: "No pudimos guardar tu reseña. Intenta de nuevo." };
   }
 
-  revalidatePath(`/prestadores/${providerId}`);
+  revalidatePath(`/prestadores/${request.provider_id}`);
+  revalidatePath(`/panel/solicitudes/${requestId}`);
   return { message: "¡Gracias por tu reseña!" };
 }

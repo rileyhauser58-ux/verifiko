@@ -2,11 +2,16 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import type {
   Category,
+  ChatMessage,
   Comuna,
+  PendingItem,
   ProviderCardData,
   ProviderPublicProfile,
   ProviderSearchFilters,
+  RequestStatus,
   Review,
+  ServiceRequestDetail,
+  ServiceRequestListItem,
 } from "@/types/domain";
 
 type ProviderRow = {
@@ -122,7 +127,7 @@ export async function getProviderReviewsDTO(
   const { data, error } = await supabase
     .from("reviews")
     .select(
-      "id, provider_id, reviewer_id, rating, comment, created_at, profiles!inner(full_name)"
+      "id, provider_id, reviewer_id, rating, comment, created_at, request_id, profiles!inner(full_name)"
     )
     .eq("provider_id", providerId)
     .order("created_at", { ascending: false });
@@ -137,6 +142,7 @@ export async function getProviderReviewsDTO(
       rating: number;
       comment: string | null;
       created_at: string;
+      request_id: string;
       profiles: { full_name: string } | null;
     }>
   ).map((r) => ({
@@ -147,22 +153,304 @@ export async function getProviderReviewsDTO(
     rating: r.rating,
     comment: r.comment,
     created_at: r.created_at,
+    request_id: r.request_id,
   }));
 }
 
-export async function getUserReviewForProvider(
-  providerId: string,
-  userId: string
-) {
+type ClientRequestRow = {
+  id: string;
+  status: RequestStatus;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  scheduled_at: string | null;
+  provider_id: string;
+  provider_profiles: {
+    business_name: string | null;
+    profiles: { full_name: string; avatar_url: string | null } | null;
+  } | null;
+};
+
+type ProviderRequestRow = {
+  id: string;
+  status: RequestStatus;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  scheduled_at: string | null;
+  client_id: string;
+  profiles: { full_name: string; avatar_url: string | null } | null;
+};
+
+type RequestDetailRow = {
+  id: string;
+  client_id: string;
+  provider_id: string;
+  status: RequestStatus;
+  message: string;
+  created_at: string;
+  completed_at: string | null;
+  scheduled_at: string | null;
+  profiles: { full_name: string; avatar_url: string | null } | null;
+  provider_profiles: {
+    business_name: string | null;
+    profiles: { full_name: string; avatar_url: string | null } | null;
+  } | null;
+};
+
+export async function getClientServiceRequestsDTO(
+  clientId: string
+): Promise<ServiceRequestListItem[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("service_requests")
+    .select(
+      `
+      id, status, message, created_at, completed_at, scheduled_at, provider_id,
+      provider_profiles!inner ( business_name, profiles!inner ( full_name, avatar_url ) )
+    `
+    )
+    .eq("client_id", clientId)
+    .order("created_at", { ascending: false });
+
+  if (error || !data) return [];
+
+  return (data as unknown as ClientRequestRow[]).map((r) => ({
+    id: r.id,
+    status: r.status,
+    message: r.message,
+    created_at: r.created_at,
+    completed_at: r.completed_at,
+    scheduled_at: r.scheduled_at,
+    counterpart_id: r.provider_id,
+    counterpart_name:
+      r.provider_profiles?.business_name ??
+      r.provider_profiles?.profiles?.full_name ??
+      "Prestador",
+    counterpart_avatar_url: r.provider_profiles?.profiles?.avatar_url ?? null,
+  }));
+}
+
+export async function getProviderServiceRequestsDTO(
+  providerId: string
+): Promise<ServiceRequestListItem[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("service_requests")
+    .select(
+      `
+      id, status, message, created_at, completed_at, scheduled_at, client_id,
+      profiles!inner ( full_name, avatar_url )
+    `
+    )
+    .eq("provider_id", providerId)
+    .order("created_at", { ascending: false });
+
+  if (error || !data) return [];
+
+  return (data as unknown as ProviderRequestRow[]).map((r) => ({
+    id: r.id,
+    status: r.status,
+    message: r.message,
+    created_at: r.created_at,
+    completed_at: r.completed_at,
+    scheduled_at: r.scheduled_at,
+    counterpart_id: r.client_id,
+    counterpart_name: r.profiles?.full_name ?? "Cliente",
+    counterpart_avatar_url: r.profiles?.avatar_url ?? null,
+  }));
+}
+
+export async function getServiceRequestDetailDTO(
+  requestId: string
+): Promise<ServiceRequestDetail | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("service_requests")
+    .select(
+      `
+      id, client_id, provider_id, status, message, created_at, completed_at, scheduled_at,
+      profiles!inner ( full_name, avatar_url ),
+      provider_profiles!inner ( business_name, profiles!inner ( full_name, avatar_url ) )
+    `
+    )
+    .eq("id", requestId)
+    .single();
+
+  if (error || !data) return null;
+  const row = data as unknown as RequestDetailRow;
+
+  return {
+    id: row.id,
+    client_id: row.client_id,
+    provider_id: row.provider_id,
+    status: row.status,
+    message: row.message,
+    created_at: row.created_at,
+    completed_at: row.completed_at,
+    scheduled_at: row.scheduled_at,
+    client_name: row.profiles?.full_name ?? "Cliente",
+    client_avatar_url: row.profiles?.avatar_url ?? null,
+    provider_name:
+      row.provider_profiles?.business_name ??
+      row.provider_profiles?.profiles?.full_name ??
+      "Prestador",
+    provider_avatar_url: row.provider_profiles?.profiles?.avatar_url ?? null,
+  };
+}
+
+export async function getRequestMessagesDTO(
+  requestId: string
+): Promise<ChatMessage[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("messages")
+    .select("id, request_id, sender_id, body, created_at")
+    .eq("request_id", requestId)
+    .order("created_at", { ascending: true });
+
+  if (error || !data) return [];
+
+  return data as unknown as ChatMessage[];
+}
+
+export async function getActiveRequestDTO(
+  requesterId: string,
+  providerId: string
+): Promise<{ id: string; status: RequestStatus } | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("service_requests")
+    .select("id, status")
+    .eq("client_id", requesterId)
+    .eq("provider_id", providerId)
+    .in("status", ["pending", "accepted"])
+    .maybeSingle();
+
+  return data as unknown as { id: string; status: RequestStatus } | null;
+}
+
+export async function getReviewForRequestDTO(requestId: string) {
   const supabase = await createClient();
   const { data } = await supabase
     .from("reviews")
     .select("id")
-    .eq("provider_id", providerId)
-    .eq("reviewer_id", userId)
+    .eq("request_id", requestId)
     .maybeSingle();
 
   return data;
+}
+
+const UPCOMING_WINDOW_MS = 48 * 60 * 60 * 1000;
+
+export async function getProviderPendingItemsDTO(
+  providerId: string
+): Promise<PendingItem[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("service_requests")
+    .select("id, status, scheduled_at, profiles!inner(full_name)")
+    .eq("provider_id", providerId)
+    .in("status", ["pending", "accepted"]);
+
+  if (!data) return [];
+
+  const rows = data as unknown as Array<{
+    id: string;
+    status: string;
+    scheduled_at: string | null;
+    profiles: { full_name: string } | null;
+  }>;
+
+  const items: PendingItem[] = [];
+
+  const pendingCount = rows.filter((r) => r.status === "pending").length;
+  if (pendingCount > 0) {
+    items.push({
+      type: "pending_response",
+      label: `Tienes ${pendingCount} ${pendingCount === 1 ? "solicitud" : "solicitudes"} esperando tu respuesta`,
+      href: "/panel/solicitudes",
+    });
+  }
+
+  const soon = Date.now() + UPCOMING_WINDOW_MS;
+  for (const r of rows) {
+    if (
+      r.status === "accepted" &&
+      r.scheduled_at &&
+      new Date(r.scheduled_at).getTime() <= soon
+    ) {
+      items.push({
+        type: "upcoming",
+        label: `Trabajo agendado con ${r.profiles?.full_name ?? "un cliente"}`,
+        href: `/panel/solicitudes/${r.id}`,
+      });
+    }
+  }
+
+  return items;
+}
+
+export async function getClientPendingItemsDTO(
+  clientId: string
+): Promise<PendingItem[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("service_requests")
+    .select(
+      `
+      id, status, scheduled_at,
+      provider_profiles!inner ( business_name, profiles!inner ( full_name ) ),
+      reviews ( id )
+    `
+    )
+    .eq("client_id", clientId)
+    .in("status", ["accepted", "completed"]);
+
+  if (!data) return [];
+
+  const rows = data as unknown as Array<{
+    id: string;
+    status: string;
+    scheduled_at: string | null;
+    provider_profiles: {
+      business_name: string | null;
+      profiles: { full_name: string } | null;
+    } | null;
+    reviews: { id: string }[];
+  }>;
+
+  const items: PendingItem[] = [];
+  const soon = Date.now() + UPCOMING_WINDOW_MS;
+
+  for (const r of rows) {
+    const name =
+      r.provider_profiles?.business_name ??
+      r.provider_profiles?.profiles?.full_name ??
+      "un prestador";
+
+    if (
+      r.status === "accepted" &&
+      r.scheduled_at &&
+      new Date(r.scheduled_at).getTime() <= soon
+    ) {
+      items.push({
+        type: "upcoming",
+        label: `Trabajo agendado con ${name}`,
+        href: `/panel/solicitudes/${r.id}`,
+      });
+    }
+
+    if (r.status === "completed" && r.reviews.length === 0) {
+      items.push({
+        type: "awaiting_review",
+        label: `Deja tu reseña para ${name}`,
+        href: `/panel/solicitudes/${r.id}`,
+      });
+    }
+  }
+
+  return items;
 }
 
 export async function getAllCategories(): Promise<Category[]> {
