@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/nav/navbar";
+import { Footer } from "@/components/nav/footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ServiHogar — Encuentra prestadores de confianza",
-    template: "%s | ServiHogar",
+    default: "TodoServicios — Encuentra prestadores de confianza",
+    template: "%s | TodoServicios",
   },
   description:
     "Encuentra gasfiters, electricistas, maestros y más, con calificaciones reales de otros usuarios.",
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

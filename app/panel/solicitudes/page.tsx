@@ -35,7 +35,7 @@ export default async function SolicitudesPage() {
         <div className="mt-6 space-y-3">
           {requests.map((request) => (
             <Link key={request.id} href={`/panel/solicitudes/${request.id}`}>
-              <Card className="transition-shadow hover:shadow-md">
+              <Card className="transition-shadow hover:shadow-soft-hover">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <Avatar

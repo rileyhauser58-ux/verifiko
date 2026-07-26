@@ -10,7 +10,7 @@ export function ServiceRequestForm({ providerId }: { providerId: string }) {
   const [state, formAction, pending] = useActionState(action, undefined);
 
   return (
-    <form action={formAction} className="space-y-3 rounded-lg border border-border p-4">
+    <form action={formAction} className="space-y-3 rounded-2xl border border-border bg-card p-4 shadow-soft">
       <p className="text-sm font-medium">Solicitar este servicio</p>
 
       <Textarea

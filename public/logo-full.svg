@@ -1,0 +1,16 @@
+<svg width="100%" viewBox="0 0 680 520" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Logo TodoServicios</title>
+  <desc>Monograma de las letras T y S en una placa redondeada azul marino, con acento en verde azulado, y el nombre TodoServicios debajo</desc>
+
+  <rect x="160" y="50" width="360" height="360" rx="72" fill="#15304C"/>
+
+  <rect x="250" y="132" width="180" height="34" rx="10" fill="#FFFFFF"/>
+  <rect x="322" y="132" width="36" height="96" rx="10" fill="#FFFFFF"/>
+
+  <path d="M340,228 C298,228 298,262 340,272 C382,282 382,316 340,316" fill="none" stroke="#3FAE9A" stroke-width="36" stroke-linecap="round"/>
+
+  <circle cx="340" cy="230" r="18" fill="#15304C"/>
+
+  <text x="340" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="500" fill="#15304C">TodoServicios</text>
+  <text x="340" y="478" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#6B7A85">Confianza en cada servicio</text>
+</svg>

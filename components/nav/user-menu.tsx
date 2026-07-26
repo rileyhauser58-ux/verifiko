@@ -18,17 +18,19 @@ export function UserMenu({ profile }: { profile: Profile | null }) {
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <Link href="/panel/solicitudes" className="text-sm font-medium hover:underline">
-        Solicitudes
-      </Link>
-      <Link href="/panel/agenda" className="text-sm font-medium hover:underline">
-        Agenda
-      </Link>
-      <Link href="/panel/historial" className="text-sm font-medium hover:underline">
-        Historial
-      </Link>
-      <Link href="/panel" className="text-sm font-medium hover:underline">
+    <div className="flex items-center gap-4">
+      <div className="hidden items-center gap-4 text-sm font-medium sm:flex">
+        <Link href="/panel/solicitudes" className="text-foreground/80 hover:text-primary">
+          Solicitudes
+        </Link>
+        <Link href="/panel/agenda" className="text-foreground/80 hover:text-primary">
+          Agenda
+        </Link>
+        <Link href="/panel/historial" className="text-foreground/80 hover:text-primary">
+          Historial
+        </Link>
+      </div>
+      <Link href="/panel" className="text-sm font-medium hover:text-primary">
         {profile.full_name || "Mi panel"}
       </Link>
       <form action={signOut}>

@@ -9,11 +9,11 @@ const LABELS: Record<RequestStatus, string> = {
 };
 
 const STYLES: Record<RequestStatus, string> = {
-  pending: "bg-primary/10 text-primary",
-  accepted: "bg-trust/10 text-trust",
-  completed: "bg-trust/10 text-trust",
-  declined: "bg-black/5 text-muted dark:bg-white/10",
-  cancelled: "bg-black/5 text-muted dark:bg-white/10",
+  pending: "bg-primary-tint text-primary-hover",
+  accepted: "bg-trust-tint text-trust",
+  completed: "bg-trust-tint text-trust",
+  declined: "bg-border/60 text-muted",
+  cancelled: "bg-border/60 text-muted",
 };
 
 export function RequestStatusBadge({ status }: { status: RequestStatus }) {

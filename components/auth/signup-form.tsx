@@ -17,9 +17,9 @@ export function SignupForm() {
         <span className="text-sm font-medium">Quiero…</span>
         <div className="grid grid-cols-2 gap-2">
           <label
-            className={`cursor-pointer rounded-md border px-3 py-2 text-center text-sm transition-colors ${
+            className={`cursor-pointer rounded-xl border px-3 py-2 text-center text-sm transition-colors ${
               role === "client"
-                ? "border-primary bg-primary/10 text-primary"
+                ? "border-primary bg-primary-tint text-primary-hover"
                 : "border-border"
             }`}
           >
@@ -34,9 +34,9 @@ export function SignupForm() {
             Contratar un servicio
           </label>
           <label
-            className={`cursor-pointer rounded-md border px-3 py-2 text-center text-sm transition-colors ${
+            className={`cursor-pointer rounded-xl border px-3 py-2 text-center text-sm transition-colors ${
               role === "provider"
-                ? "border-primary bg-primary/10 text-primary"
+                ? "border-primary bg-primary-tint text-primary-hover"
                 : "border-border"
             }`}
           >
@@ -89,6 +89,25 @@ export function SignupForm() {
         />
         {state?.errors?.password && (
           <p className="text-xs text-red-600">{state.errors.password[0]}</p>
+        )}
+      </div>
+
+      <div className="space-y-1">
+        <label className="flex items-start gap-2 text-sm text-muted">
+          <input type="checkbox" name="accepted_terms" className="mt-0.5" />
+          <span>
+            Acepto los{" "}
+            <Link href="/terminos" className="text-primary hover:underline">
+              Términos y Condiciones
+            </Link>{" "}
+            y la{" "}
+            <Link href="/privacidad" className="text-primary hover:underline">
+              Política de Privacidad
+            </Link>
+          </span>
+        </label>
+        {state?.errors?.accepted_terms && (
+          <p className="text-xs text-red-600">{state.errors.accepted_terms[0]}</p>
         )}
       </div>
 

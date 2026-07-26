@@ -35,6 +35,11 @@ export function LoginForm() {
         {state?.errors?.password && (
           <p className="text-xs text-red-600">{state.errors.password[0]}</p>
         )}
+        <p className="text-right text-xs">
+          <Link href="/olvide-password" className="text-primary hover:underline">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </p>
       </div>
 
       {state?.message && <p className="text-sm text-red-600">{state.message}</p>}

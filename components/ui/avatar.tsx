@@ -27,7 +27,7 @@ export function Avatar({
         alt={name}
         width={size}
         height={size}
-        className="rounded-full object-cover"
+        className="shrink-0 rounded-full object-cover ring-2 ring-card"
         style={{ width: size, height: size }}
       />
     );
@@ -36,9 +36,11 @@ export function Avatar({
   return (
     <div
       style={{ width: size, height: size }}
-      className="flex shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary"
+      className="flex shrink-0 items-center justify-center rounded-full bg-primary-tint font-medium text-primary-hover ring-2 ring-card"
     >
-      {initialsOf(name)}
+      <span style={{ fontSize: Math.max(11, size * 0.38) }}>
+        {initialsOf(name)}
+      </span>
     </div>
   );
 }

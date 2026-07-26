@@ -12,6 +12,9 @@ export const SignupSchema = z.object({
   role: z.enum(["client", "provider"], {
     error: "Selecciona un tipo de cuenta.",
   }),
+  accepted_terms: z.literal("on", {
+    error: "Debes aceptar los Términos y la Política de Privacidad.",
+  }),
 });
 
 export type SignupFormState =
@@ -21,6 +24,7 @@ export type SignupFormState =
         email?: string[];
         password?: string[];
         role?: string[];
+        accepted_terms?: string[];
       };
       message?: string;
     }
@@ -39,4 +43,12 @@ export type LoginFormState =
       };
       message?: string;
     }
+  | undefined;
+
+export const RequestResetSchema = z.object({
+  email: z.email({ error: "Ingresa un correo válido." }).trim(),
+});
+
+export type RequestResetFormState =
+  | { errors?: { email?: string[] }; message?: string }
   | undefined;

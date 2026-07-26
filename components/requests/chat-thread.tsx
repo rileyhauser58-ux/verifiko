@@ -65,7 +65,7 @@ export function ChatThread({
   }, [pending, state]);
 
   return (
-    <div className="flex flex-col rounded-lg border border-border">
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
       <div className="max-h-96 flex-1 space-y-3 overflow-y-auto p-4">
         {messages.length === 0 ? (
           <p className="text-sm text-muted">
@@ -83,10 +83,10 @@ export function ChatThread({
                   {isMine ? "Tú" : otherName}
                 </span>
                 <p
-                  className={`mt-0.5 max-w-xs rounded-lg px-3 py-2 text-sm ${
+                  className={`mt-0.5 max-w-xs rounded-2xl px-3.5 py-2 text-sm ${
                     isMine
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-black/5 dark:bg-white/10"
+                      ? "rounded-br-sm bg-primary text-primary-foreground"
+                      : "rounded-bl-sm border border-border bg-card"
                   }`}
                 >
                   {message.body}

@@ -11,11 +11,11 @@ export function ReviewForm({ requestId }: { requestId: string }) {
   const [rating, setRating] = useState(0);
 
   return (
-    <form action={formAction} className="space-y-3 rounded-lg border border-border p-4">
+    <form action={formAction} className="space-y-3 rounded-2xl border border-border bg-card p-4 shadow-soft">
       <p className="text-sm font-medium">Deja tu calificación</p>
 
       <input type="hidden" name="rating" value={rating} />
-      <div className="flex gap-1 text-2xl text-primary">
+      <div className="flex gap-1 text-2xl text-rating">
         {[1, 2, 3, 4, 5].map((value) => (
           <button
             key={value}

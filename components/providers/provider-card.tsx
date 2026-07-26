@@ -10,7 +10,7 @@ export function ProviderCard({ provider }: { provider: ProviderCardData }) {
 
   return (
     <Link href={`/prestadores/${provider.id}`}>
-      <Card className="h-full transition-shadow hover:shadow-md">
+      <Card className="h-full transition-shadow hover:shadow-soft-hover">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-3">
             <Avatar src={provider.avatar_url} name={displayName} size={40} />

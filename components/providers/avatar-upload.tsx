@@ -60,7 +60,7 @@ export function AvatarUpload({
       <Avatar src={preview} name={fullName} size={64} />
       <div>
         <label className="cursor-pointer">
-          <span className="inline-flex items-center justify-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5">
+          <span className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary-tint">
             {uploading || isPending ? "Subiendo…" : "Cambiar foto"}
           </span>
           <input

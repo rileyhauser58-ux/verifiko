@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata = {
-  title: "Ingresar | ServiHogar",
+  title: "Ingresar | TodoServicios",
 };
 
 export default function IngresarPage() {

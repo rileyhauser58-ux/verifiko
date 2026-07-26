@@ -30,6 +30,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 dev.log
+start.log
+
+# capturas de pantalla locales (no son parte de la app)
+/capturas
 
 # env files (can opt-in for committing if needed)
 .env*

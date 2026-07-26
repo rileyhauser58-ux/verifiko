@@ -69,7 +69,7 @@ export default async function HistorialPage() {
               key={entry.counterpart_id}
               href={`/panel/solicitudes/${entry.last_request_id}`}
             >
-              <Card className="transition-shadow hover:shadow-md">
+              <Card className="transition-shadow hover:shadow-soft-hover">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <Avatar

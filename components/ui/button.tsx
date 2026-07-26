@@ -5,10 +5,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-primary text-primary-foreground hover:opacity-90",
+  primary:
+    "bg-primary text-primary-foreground shadow-[0_2px_8px_-2px_rgba(21,48,76,0.45)] hover:bg-primary-hover hover:shadow-[0_4px_14px_-2px_rgba(21,48,76,0.5)] active:scale-[0.98]",
   secondary:
-    "bg-transparent border border-border text-foreground hover:bg-black/5 dark:hover:bg-white/5",
-  ghost: "bg-transparent text-foreground hover:bg-black/5 dark:hover:bg-white/5",
+    "bg-card border border-border text-foreground hover:border-primary/40 hover:bg-primary-tint active:scale-[0.98]",
+  ghost:
+    "bg-transparent text-foreground hover:bg-primary-tint active:scale-[0.98]",
 };
 
 export function Button({
@@ -18,7 +20,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none ${variants[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100 ${variants[variant]} ${className}`}
       {...props}
     />
   );

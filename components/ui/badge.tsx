@@ -8,7 +8,7 @@ type BadgeProps = {
 export function Badge({ children, variant = "default" }: BadgeProps) {
   if (variant === "verified") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-trust/10 px-2.5 py-1 text-xs font-medium text-trust">
+      <span className="inline-flex items-center gap-1 rounded-full bg-trust-tint px-2.5 py-1 text-xs font-medium text-trust">
         <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
           <path
             fillRule="evenodd"
@@ -22,7 +22,7 @@ export function Badge({ children, variant = "default" }: BadgeProps) {
   }
 
   return (
-    <span className="inline-flex items-center rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted">
+    <span className="inline-flex items-center rounded-full bg-primary-tint px-2.5 py-1 text-xs font-medium text-primary-hover">
       {children}
     </span>
   );

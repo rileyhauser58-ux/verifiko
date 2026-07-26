@@ -1,41 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #d97706;
+  --background: #f6f8f9;
+  --foreground: #16212b;
+  --primary: #15304c;
+  --primary-hover: #1e3f5e;
   --primary-foreground: #ffffff;
-  --trust: #0f766e;
-  --border: #e5e7eb;
-  --muted: #6b7280;
+  --primary-tint: #e7ecf1;
+  --trust: #3fae9a;
+  --trust-tint: #e3f5f1;
+  --border: #e2e6ea;
+  --muted: #6b7a85;
   --card: #ffffff;
+  --rating: #f0a020;
+  --shadow-color: 210 45% 20%;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-tint: var(--primary-tint);
   --color-trust: var(--trust);
+  --color-trust-tint: var(--trust-tint);
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-card: var(--card);
+  --color-rating: var(--rating);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --shadow-soft: 0 1px 2px hsl(var(--shadow-color) / 0.06), 0 4px 12px hsl(var(--shadow-color) / 0.08);
+  --shadow-soft-hover: 0 2px 4px hsl(var(--shadow-color) / 0.08), 0 12px 24px hsl(var(--shadow-color) / 0.14);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --border: #27272a;
-    --muted: #9ca3af;
-    --card: #141414;
+    --background: #0b1520;
+    --foreground: #edf1f4;
+    --primary: #3f6e96;
+    --primary-hover: #4f83ad;
+    --primary-tint: rgba(63, 110, 150, 0.18);
+    --trust-tint: rgba(63, 174, 154, 0.18);
+    --border: #223244;
+    --muted: #93a2ad;
+    --card: #101e2c;
+    --shadow-color: 210 60% 2%;
   }
+}
+
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--primary-tint);
+  color: var(--primary-hover);
 }
