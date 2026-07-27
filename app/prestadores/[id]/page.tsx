@@ -68,7 +68,9 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
           {profile && profile.id !== id && (
             <div className="flex items-center gap-2">
               <ReportButton reportedProviderId={id} requestId={null} />
-              <EmergencyButton reportedProviderId={id} requestId={null} />
+              {profile.role === "client" && (
+                <EmergencyButton reportedProviderId={id} requestId={null} />
+              )}
             </div>
           )}
         </div>
