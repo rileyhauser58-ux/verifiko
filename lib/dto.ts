@@ -4,6 +4,7 @@ import type {
   Category,
   ChatMessage,
   Comuna,
+  LocationShareInfo,
   PendingItem,
   ProviderCardData,
   ProviderPublicProfile,
@@ -12,6 +13,7 @@ import type {
   Review,
   ServiceRequestDetail,
   ServiceRequestListItem,
+  VerificationDocument,
 } from "@/types/domain";
 
 type ProviderRow = {
@@ -50,6 +52,7 @@ function toProviderCard(row: ProviderRow): ProviderPublicProfile {
     verified: row.verified,
     avg_rating: row.avg_rating,
     review_count: row.review_count,
+    completed_jobs: 0,
     years_experience: row.years_experience,
     categories: row.provider_categories
       .map((pc) => pc.categories)
@@ -58,6 +61,20 @@ function toProviderCard(row: ProviderRow): ProviderPublicProfile {
       .map((pz) => pz.comunas)
       .filter((c): c is Comuna => c !== null),
   };
+}
+
+// service_requests solo es legible por sus dos participantes (RLS), así
+// que un visitante público no puede contarlas directamente — se usa una
+// función de Postgres (SECURITY DEFINER) que expone solo el número, nunca
+// las filas. Volumen esperado bajo en el MVP: se calcula al leer, sin
+// denormalizar en una columna.
+async function getCompletedJobsCount(providerId: string): Promise<number> {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("get_completed_jobs_count", {
+    target_provider_id: providerId,
+  });
+
+  return data ?? 0;
 }
 
 // El volumen esperado en el MVP es bajo: se trae la lista completa de
@@ -100,6 +117,13 @@ export async function searchProvidersDTO(
     );
   }
 
+  const counts = await Promise.all(
+    providers.map((p) => getCompletedJobsCount(p.id))
+  );
+  providers.forEach((p, i) => {
+    p.completed_jobs = counts[i];
+  });
+
   return providers.sort(
     (a, b) => b.avg_rating - a.avg_rating || b.review_count - a.review_count
   );
@@ -117,7 +141,9 @@ export async function getProviderPublicProfileDTO(
 
   if (error || !data) return null;
 
-  return toProviderCard(data as unknown as ProviderRow);
+  const provider = toProviderCard(data as unknown as ProviderRow);
+  provider.completed_jobs = await getCompletedJobsCount(id);
+  return provider;
 }
 
 export async function getProviderReviewsDTO(
@@ -451,6 +477,35 @@ export async function getClientPendingItemsDTO(
   }
 
   return items;
+}
+
+// Documentos de verificación: solo el propio prestador los puede leer
+// (RLS los restringe), se usan en /panel/verificacion.
+export async function getVerificationDocumentsDTO(
+  providerId: string
+): Promise<VerificationDocument[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("verification_documents")
+    .select("document_type, status")
+    .eq("provider_id", providerId);
+
+  return data ?? [];
+}
+
+// Única DTO de la app pensada para una página SIN sesión: el token en sí
+// es la credencial de acceso (patrón de "capability URL").
+export async function getLocationShareDTO(
+  shareToken: string
+): Promise<LocationShareInfo | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("location_shares")
+    .select("id, active, request_id")
+    .eq("share_token", shareToken)
+    .maybeSingle();
+
+  return data;
 }
 
 export async function getAllCategories(): Promise<Category[]> {

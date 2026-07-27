@@ -10,6 +10,8 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
+import { EmergencyButton } from "@/components/providers/emergency-button";
+import { ReportButton } from "@/components/providers/report-button";
 import { ReviewList } from "@/components/providers/review-list";
 import { ServiceRequestForm } from "@/components/requests/service-request-form";
 
@@ -61,11 +63,25 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
             <p className="text-sm text-muted">{provider.full_name}</p>
           </div>
         </div>
-        {provider.verified && <Badge variant="verified">Verificado</Badge>}
+        <div className="flex flex-col items-end gap-2">
+          {provider.verified && <Badge variant="verified">Verificado</Badge>}
+          {profile && profile.id !== id && (
+            <div className="flex items-center gap-2">
+              <ReportButton reportedProviderId={id} requestId={null} />
+              <EmergencyButton reportedProviderId={id} requestId={null} />
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="mt-3">
+      <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
         <StarRating rating={provider.avg_rating} reviewCount={provider.review_count} />
+        {provider.completed_jobs > 0 && (
+          <span className="text-sm text-muted">
+            · {provider.completed_jobs}{" "}
+            {provider.completed_jobs === 1 ? "trabajo completado" : "trabajos completados"}
+          </span>
+        )}
       </div>
 
       <div className="mt-4 flex flex-wrap gap-1.5">

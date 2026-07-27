@@ -19,8 +19,14 @@ export function ProviderCard({ provider }: { provider: ProviderCardData }) {
           {provider.verified && <Badge variant="verified">Verificado</Badge>}
         </div>
 
-        <div className="mt-2">
+        <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
           <StarRating rating={provider.avg_rating} reviewCount={provider.review_count} size="sm" />
+          {provider.completed_jobs > 0 && (
+            <span className="text-xs text-muted">
+              · {provider.completed_jobs}{" "}
+              {provider.completed_jobs === 1 ? "trabajo" : "trabajos"}
+            </span>
+          )}
         </div>
 
         {provider.bio && (

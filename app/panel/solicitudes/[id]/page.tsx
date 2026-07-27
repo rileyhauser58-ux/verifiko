@@ -10,6 +10,9 @@ import { Card } from "@/components/ui/card";
 import { RequestStatusBadge } from "@/components/requests/request-status-badge";
 import { RequestActions } from "@/components/requests/request-actions";
 import { ChatThread } from "@/components/requests/chat-thread";
+import { LocationShareButton } from "@/components/requests/location-share-button";
+import { EmergencyButton } from "@/components/providers/emergency-button";
+import { ReportButton } from "@/components/providers/report-button";
 import { ReviewForm } from "@/components/providers/review-form";
 
 export const metadata = { title: "Detalle de solicitud" };
@@ -78,15 +81,30 @@ export default async function SolicitudDetailPage({ params }: SolicitudPageProps
           </p>
         )}
 
-        <div className="mt-5">
+        <div className="mt-5 flex items-center justify-between gap-3">
           <RequestActions
             requestId={request.id}
             status={request.status}
             isClient={isClient}
             isProvider={isProvider}
           />
+          {isClient && (
+            <ReportButton reportedProviderId={request.provider_id} requestId={request.id} />
+          )}
         </div>
+
+        {isClient && request.status === "accepted" && (
+          <div className="mt-4">
+            <EmergencyButton reportedProviderId={request.provider_id} requestId={request.id} />
+          </div>
+        )}
       </Card>
+
+      {request.status === "accepted" && (
+        <Card>
+          <LocationShareButton requestId={request.id} />
+        </Card>
+      )}
 
       {chatAvailable ? (
         <ChatThread

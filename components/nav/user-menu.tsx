@@ -29,6 +29,11 @@ export function UserMenu({ profile }: { profile: Profile | null }) {
         <Link href="/panel/historial" className="text-foreground/80 hover:text-primary">
           Historial
         </Link>
+        {profile.role === "provider" && (
+          <Link href="/panel/verificacion" className="text-foreground/80 hover:text-primary">
+            Verificación
+          </Link>
+        )}
       </div>
       <Link href="/panel" className="text-sm font-medium hover:text-primary">
         {profile.full_name || "Mi panel"}

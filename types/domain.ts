@@ -28,6 +28,7 @@ export type ProviderCardData = {
   verified: boolean;
   avg_rating: number;
   review_count: number;
+  completed_jobs: number;
   categories: Category[];
   comunas: Comuna[];
 };
@@ -109,4 +110,25 @@ export type HistoryEntry = {
   completed_requests: number;
   last_interaction_at: string;
   last_request_id: string;
+};
+
+export type DocumentType = "id_card" | "selfie" | "background_check";
+export type DocumentStatus = "pending" | "approved" | "rejected";
+
+export type VerificationDocument = {
+  document_type: DocumentType;
+  status: DocumentStatus;
+};
+
+export type ReportReason =
+  | "unsafe_behavior"
+  | "no_show"
+  | "harassment"
+  | "fraud"
+  | "other";
+
+export type LocationShareInfo = {
+  id: string;
+  active: boolean;
+  request_id: string;
 };
