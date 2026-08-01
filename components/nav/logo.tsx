@@ -8,16 +8,22 @@ export function LogoMark({ size = 28 }: { size?: number }) {
       aria-hidden="true"
     >
       <rect x="160" y="50" width="360" height="360" rx="72" fill="#15304C" />
-      <rect x="250" y="132" width="180" height="34" rx="10" fill="#FFFFFF" />
-      <rect x="322" y="132" width="36" height="96" rx="10" fill="#FFFFFF" />
-      <path
-        d="M340,228 C298,228 298,262 340,272 C382,282 382,316 340,316"
+      <circle
+        cx="340"
+        cy="230"
+        r="150"
         fill="none"
         stroke="#3FAE9A"
-        strokeWidth="36"
-        strokeLinecap="round"
+        strokeWidth="22"
       />
-      <circle cx="340" cy="230" r="18" fill="#15304C" />
+      <path
+        d="M260,235 L315,290 L420,175"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="34"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -26,7 +32,7 @@ export function Logo({ size = 28 }: { size?: number }) {
   return (
     <span className="inline-flex items-center gap-2">
       <LogoMark size={size} />
-      <span className="text-lg font-semibold">TodoServicios</span>
+      <span className="text-lg font-semibold">Verifiko</span>
     </span>
   );
 }

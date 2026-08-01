@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Política de Privacidad",
-  description: "Cómo TodoServicios recopila, usa y protege tus datos personales.",
+  description: "Cómo Verifiko recopila, usa y protege tus datos personales.",
 };
 
 export default function PrivacidadPage() {
@@ -118,10 +118,10 @@ export default function PrivacidadPage() {
             al uso de tus datos personales. Para ejercer estos derechos,
             escríbenos a{" "}
             <a
-              href="mailto:contacto@todoservicios.cl"
+              href="mailto:contacto@verifiko.cl"
               className="text-primary hover:underline"
             >
-              contacto@todoservicios.cl
+              contacto@verifiko.cl
             </a>
             .
           </p>

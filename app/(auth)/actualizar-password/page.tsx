@@ -1,7 +1,7 @@
 import { UpdatePasswordForm } from "@/components/auth/update-password-form";
 
 export const metadata = {
-  title: "Actualizar contraseña | TodoServicios",
+  title: "Actualizar contraseña | Verifiko",
 };
 
 export default function ActualizarPasswordPage() {

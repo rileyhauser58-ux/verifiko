@@ -1,7 +1,7 @@
 import { RequestResetForm } from "@/components/auth/request-reset-form";
 
 export const metadata = {
-  title: "Recuperar contraseña | TodoServicios",
+  title: "Recuperar contraseña | Verifiko",
 };
 
 export default function OlvidePasswordPage() {

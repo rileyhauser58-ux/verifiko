@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata = {
-  title: "Ingresar | TodoServicios",
+  title: "Ingresar | Verifiko",
 };
 
 export default function IngresarPage() {

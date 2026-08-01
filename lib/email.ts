@@ -23,7 +23,7 @@ export async function sendEmergencyAlertEmail(params: {
 
   try {
     await resend.emails.send({
-      from: "TodoServicios <onboarding@resend.dev>",
+      from: "Verifiko <onboarding@resend.dev>",
       to,
       subject: `🚨 Botón de emergencia — ${params.reporterName}`,
       text: [

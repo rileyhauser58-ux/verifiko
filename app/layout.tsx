@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "TodoServicios — Encuentra prestadores de confianza",
-    template: "%s | TodoServicios",
+    default: "Verifiko — Encuentra prestadores de confianza",
+    template: "%s | Verifiko",
   },
   description:
     "Encuentra gasfiters, electricistas, maestros y más, con calificaciones reales de otros usuarios.",

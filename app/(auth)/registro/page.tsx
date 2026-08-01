@@ -1,7 +1,7 @@
 import { SignupForm } from "@/components/auth/signup-form";
 
 export const metadata = {
-  title: "Crear cuenta | TodoServicios",
+  title: "Crear cuenta | Verifiko",
 };
 
 export default function RegistroPage() {

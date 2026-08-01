@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Términos y Condiciones",
-  description: "Términos y condiciones de uso de TodoServicios.",
+  description: "Términos y condiciones de uso de Verifiko.",
 };
 
 export default function TerminosPage() {
@@ -11,9 +11,9 @@ export default function TerminosPage() {
 
       <div className="mt-8 space-y-8 text-sm leading-relaxed">
         <section>
-          <h2 className="mb-2 text-base font-semibold">1. Qué es TodoServicios</h2>
+          <h2 className="mb-2 text-base font-semibold">1. Qué es Verifiko</h2>
           <p>
-            TodoServicios es una plataforma que conecta a personas que necesitan
+            Verifiko es una plataforma que conecta a personas que necesitan
             contratar servicios para el hogar (gasfitería, electricidad,
             carpintería, mecánica automotriz, pintura, jardinería,
             cerrajería, aseo y limpieza, entre otros) con prestadores
@@ -24,12 +24,12 @@ export default function TerminosPage() {
 
         <section>
           <h2 className="mb-2 text-base font-semibold">
-            2. TodoServicios es un intermediario, no un empleador
+            2. Verifiko es un intermediario, no un empleador
           </h2>
           <p>
-            Los prestadores que aparecen en TodoServicios son trabajadores
+            Los prestadores que aparecen en Verifiko son trabajadores
             independientes. No son empleados, contratistas ni representantes
-            de TodoServicios. TodoServicios no supervisa, dirige ni garantiza el
+            de Verifiko. Verifiko no supervisa, dirige ni garantiza el
             trabajo realizado por los prestadores, y no es parte del acuerdo
             comercial que se forma entre un cliente y un prestador. La
             relación de servicio, el precio y las condiciones del trabajo se
@@ -61,9 +61,9 @@ export default function TerminosPage() {
             4. Solicitudes, chat y pagos
           </h2>
           <p>
-            TodoServicios facilita el contacto entre cliente y prestador a
+            Verifiko facilita el contacto entre cliente y prestador a
             través de solicitudes de servicio y un chat dentro de la
-            plataforma. TodoServicios{" "}
+            plataforma. Verifiko{" "}
             <strong>no procesa ni intermedia pagos</strong>: cualquier cobro
             por el servicio se acuerda y realiza directamente entre cliente y
             prestador, fuera de la plataforma. No compartas datos bancarios ni
@@ -78,13 +78,13 @@ export default function TerminosPage() {
             envió una solicitud a un prestador y esta fue marcada como
             completada. Las reseñas deben reflejar una experiencia real y no
             pueden contener contenido difamatorio, discriminatorio o falso.
-            TodoServicios puede eliminar reseñas que incumplan esta regla.
+            Verifiko puede eliminar reseñas que incumplan esta regla.
           </p>
         </section>
 
         <section>
           <h2 className="mb-2 text-base font-semibold">6. Uso aceptable</h2>
-          <p>No está permitido usar TodoServicios para:</p>
+          <p>No está permitido usar Verifiko para:</p>
           <ul className="list-disc space-y-1 pl-5">
             <li>
               Publicar contenido falso, ofensivo, discriminatorio o ilegal.
@@ -98,7 +98,7 @@ export default function TerminosPage() {
             </li>
             <li>
               Usar los datos de otros usuarios para fines distintos a
-              coordinar un servicio a través de TodoServicios.
+              coordinar un servicio a través de Verifiko.
             </li>
           </ul>
         </section>
@@ -108,7 +108,7 @@ export default function TerminosPage() {
             7. Suspensión y término de cuentas
           </h2>
           <p>
-            TodoServicios puede suspender o eliminar una cuenta que incumpla
+            Verifiko puede suspender o eliminar una cuenta que incumpla
             estos términos, sin perjuicio de otras acciones que correspondan.
             Puedes dejar de usar la plataforma en cualquier momento.
           </p>
@@ -119,14 +119,14 @@ export default function TerminosPage() {
             8. Limitación de responsabilidad
           </h2>
           <p>
-            TodoServicios entrega la plataforma &ldquo;tal cual&rdquo; y no
+            Verifiko entrega la plataforma &ldquo;tal cual&rdquo; y no
             garantiza la calidad, seguridad, legalidad ni idoneidad de los
             servicios ofrecidos por los prestadores, ni la veracidad absoluta
             de los perfiles o reseñas. La insignia de
             &ldquo;Verificado&rdquo; indica una
-            revisión básica realizada por el equipo de TodoServicios, no una
+            revisión básica realizada por el equipo de Verifiko, no una
             garantía de desempeño. En la medida permitida por la ley,
-            TodoServicios no es responsable por daños derivados de un servicio
+            Verifiko no es responsable por daños derivados de un servicio
             contratado a través de la plataforma.
           </p>
         </section>
@@ -146,10 +146,10 @@ export default function TerminosPage() {
             Estos términos se rigen por las leyes de la República de Chile.
             Si tienes dudas sobre estos términos, escríbenos a{" "}
             <a
-              href="mailto:contacto@todoservicios.cl"
+              href="mailto:contacto@verifiko.cl"
               className="text-primary hover:underline"
             >
-              contacto@todoservicios.cl
+              contacto@verifiko.cl
             </a>
             .
           </p>
