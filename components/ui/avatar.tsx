@@ -36,7 +36,7 @@ export function Avatar({
   return (
     <div
       style={{ width: size, height: size }}
-      className="flex shrink-0 items-center justify-center rounded-full bg-primary-tint font-medium text-primary-hover ring-2 ring-card"
+      className="flex shrink-0 items-center justify-center rounded-full bg-primary/35 font-medium text-primary-foreground ring-2 ring-card"
     >
       <span style={{ fontSize: Math.max(11, size * 0.38) }}>
         {initialsOf(name)}
