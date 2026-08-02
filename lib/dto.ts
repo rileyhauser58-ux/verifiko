@@ -528,9 +528,3 @@ export async function getAllComunas(): Promise<Comuna[]> {
   return data ?? [];
 }
 
-export async function getAllPublicProviderIdsDTO(): Promise<string[]> {
-  const supabase = await createClient();
-  const { data } = await supabase.from("provider_profiles").select("id");
-
-  return (data ?? []).map((row) => row.id);
-}

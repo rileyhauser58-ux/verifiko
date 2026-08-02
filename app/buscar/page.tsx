@@ -1,4 +1,5 @@
 import { getAllCategories, getAllComunas, searchProvidersDTO } from "@/lib/dto";
+import { verifySession } from "@/lib/dal";
 import { ProviderCard } from "@/components/providers/provider-card";
 import { ProviderFilters } from "@/components/providers/provider-filters";
 
@@ -13,6 +14,7 @@ type BuscarPageProps = {
 };
 
 export default async function BuscarPage({ searchParams }: BuscarPageProps) {
+  await verifySession();
   const filters = await searchParams;
 
   const [providers, categories, comunas] = await Promise.all([

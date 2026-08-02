@@ -5,7 +5,7 @@ import {
   getProviderPublicProfileDTO,
   getProviderReviewsDTO,
 } from "@/lib/dto";
-import { getCurrentUserProfile } from "@/lib/dal";
+import { getCurrentUserProfile, verifySession } from "@/lib/dal";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: ProviderPageProps) {
 }
 
 export default async function ProviderProfilePage({ params }: ProviderPageProps) {
+  await verifySession();
   const { id } = await params;
   const provider = await getProviderPublicProfileDTO(id);
 

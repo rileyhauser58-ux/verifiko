@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PROTECTED_PREFIXES = ["/panel"];
+const PROTECTED_PREFIXES = ["/panel", "/buscar", "/prestadores"];
 const AUTH_PAGES = ["/ingresar", "/registro"];
 
 // Solo redirecciones optimistas para UX. La autorización real vive en
