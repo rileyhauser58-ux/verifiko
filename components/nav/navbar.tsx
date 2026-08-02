@@ -7,29 +7,31 @@ export async function Navbar() {
   const profile = await getCurrentUserProfile();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="transition-opacity hover:opacity-80">
+    <header className="sticky top-0 z-10 border-b border-border bg-card/90 shadow-soft backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-8 px-4">
+        <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
           <Logo />
         </Link>
         <nav className="hidden items-center gap-6 text-sm sm:flex">
           {profile?.role === "provider" ? (
             <Link
               href="/panel/perfil"
-              className="font-medium text-foreground/80 hover:text-primary"
+              className="font-medium text-foreground/70 transition-colors hover:text-primary"
             >
               Consigue clientes
             </Link>
           ) : (
             <Link
               href="/buscar"
-              className="font-medium text-foreground/80 hover:text-primary"
+              className="font-medium text-foreground/70 transition-colors hover:text-primary"
             >
               Buscar prestadores
             </Link>
           )}
         </nav>
-        <UserMenu profile={profile} />
+        <div className="ml-auto">
+          <UserMenu profile={profile} />
+        </div>
       </div>
     </header>
   );
