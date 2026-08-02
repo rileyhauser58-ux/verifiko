@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getCurrentUserProfile } from "@/lib/dal";
 import { getAllCategories } from "@/lib/dto";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -70,6 +72,9 @@ const FEATURES = [
 ];
 
 export default async function Home() {
+  const profile = await getCurrentUserProfile();
+  if (profile) redirect("/panel");
+
   const categories = await getAllCategories();
 
   return (
