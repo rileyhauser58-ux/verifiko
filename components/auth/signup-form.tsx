@@ -5,6 +5,7 @@ import Link from "next/link";
 import { signUp } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import type { UserRole } from "@/types/domain";
 
 export function SignupForm() {
@@ -80,10 +81,9 @@ export function SignupForm() {
         <label htmlFor="password" className="text-sm font-medium">
           Contraseña
         </label>
-        <Input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           required
           autoComplete="new-password"
         />

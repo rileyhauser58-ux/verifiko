@@ -5,6 +5,7 @@ import Link from "next/link";
 import { signIn } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(signIn, undefined);
@@ -25,10 +26,9 @@ export function LoginForm() {
         <label htmlFor="password" className="text-sm font-medium">
           Contraseña
         </label>
-        <Input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           required
           autoComplete="current-password"
         />

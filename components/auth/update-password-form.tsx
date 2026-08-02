@@ -5,7 +5,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export function UpdatePasswordForm() {
   const [ready, setReady] = useState(false);
@@ -80,9 +80,8 @@ export function UpdatePasswordForm() {
         <label htmlFor="password" className="text-sm font-medium">
           Nueva contraseña
         </label>
-        <Input
+        <PasswordInput
           id="password"
-          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
