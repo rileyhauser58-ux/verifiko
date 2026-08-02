@@ -5,6 +5,24 @@ import { Card } from "@/components/ui/card";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { Reveal } from "@/components/ui/reveal";
 
+const STEPS = [
+  {
+    title: "Busca y compara",
+    description:
+      "Filtra por rubro y comuna, revisa perfiles, verificación y reseñas reales antes de decidir.",
+  },
+  {
+    title: "Solicita y coordina",
+    description:
+      "Envía tu solicitud y coordina todo por el chat de la app, sin compartir tu teléfono personal.",
+  },
+  {
+    title: "Contrata con confianza",
+    description:
+      "El prestador hace el trabajo, marcas la solicitud como completada y dejas tu reseña.",
+  },
+];
+
 const FEATURES = [
   {
     tone: "primary" as const,
@@ -124,6 +142,25 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      <section className="mx-auto max-w-4xl px-4 pb-16">
+        <Reveal>
+          <h2 className="mb-5 text-lg font-semibold">Cómo funciona</h2>
+        </Reveal>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {STEPS.map((step, i) => (
+            <Reveal key={step.title} delay={i * 90}>
+              <div className="relative">
+                <span className="font-serif flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                  {i + 1}
+                </span>
+                <h3 className="mt-3 font-semibold">{step.title}</h3>
+                <p className="mt-1 text-sm text-muted">{step.description}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       <section className="mx-auto max-w-4xl px-4 pb-24">
         <div className="grid gap-4 sm:grid-cols-3">
