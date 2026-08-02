@@ -51,7 +51,7 @@ export async function signUp(
     };
   }
 
-  redirect("/panel");
+  redirect(role === "provider" ? "/panel/perfil" : "/panel");
 }
 
 export async function signIn(
