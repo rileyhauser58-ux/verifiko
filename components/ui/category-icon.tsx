@@ -40,6 +40,14 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M3.5 20.5l3-3M6.5 17.5l2 2M9 15l3 3" />
     </>
   ),
+  "fletes-escombros": (
+    <>
+      <path d="M3 16V7a1 1 0 011-1h9v10" />
+      <path d="M13 10h4l3 3v3h-7" />
+      <circle cx="7.5" cy="17" r="1.5" />
+      <circle cx="17" cy="17" r="1.5" />
+    </>
+  ),
 };
 
 export function CategoryIcon({
