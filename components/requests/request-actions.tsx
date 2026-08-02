@@ -36,6 +36,7 @@ function ScheduleForm({
   action,
   label,
   variant = "primary",
+  helperText,
 }: {
   action: (
     state: { errors?: { scheduled_at?: string[] }; message?: string } | undefined,
@@ -43,11 +44,13 @@ function ScheduleForm({
   ) => Promise<{ errors?: { scheduled_at?: string[] }; message?: string } | undefined>;
   label: string;
   variant?: "primary" | "secondary";
+  helperText?: string;
 }) {
   const [state, formAction, pending] = useActionState(action, undefined);
 
   return (
     <form action={formAction} className="flex flex-col items-start gap-1">
+      {helperText && <p className="text-xs font-medium text-muted">{helperText}</p>}
       <Input type="datetime-local" name="scheduled_at" required className="w-auto" />
       {state?.errors?.scheduled_at && (
         <p className="text-xs text-red-600">{state.errors.scheduled_at[0]}</p>
@@ -79,6 +82,7 @@ export function RequestActions({
         key="accept"
         action={respondToRequest.bind(null, requestId, "accepted")}
         label="Aceptar y agendar"
+        helperText="¿Cuándo puedes hacer este trabajo?"
       />,
       <ActionForm
         key="decline"

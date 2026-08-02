@@ -8,6 +8,7 @@ import {
 import { Avatar } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { RequestStatusBadge } from "@/components/requests/request-status-badge";
+import { RequestTimeline } from "@/components/requests/request-timeline";
 import { RequestActions } from "@/components/requests/request-actions";
 import { ChatThread } from "@/components/requests/chat-thread";
 import { LocationShareButton } from "@/components/requests/location-share-button";
@@ -66,7 +67,11 @@ export default async function SolicitudDetailPage({ params }: SolicitudPageProps
           <RequestStatusBadge status={request.status} />
         </div>
 
-        <p className="mt-4 text-sm leading-relaxed">{request.message}</p>
+        <div className="mt-5">
+          <RequestTimeline status={request.status} />
+        </div>
+
+        <p className="mt-5 text-sm leading-relaxed">{request.message}</p>
 
         {request.scheduled_at && (
           <p className="mt-3 text-sm font-medium text-trust">
