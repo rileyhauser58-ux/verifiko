@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllCategories } from "@/lib/dto";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CategoryIcon } from "@/components/ui/category-icon";
 
 const FEATURES = [
   {
@@ -127,8 +128,9 @@ export default async function Home() {
               <Link
                 key={category.id}
                 href={`/buscar?categoria=${category.slug}`}
-                className="rounded-full border border-border bg-card px-4 py-2 text-sm transition-colors hover:border-primary/40 hover:bg-primary-tint hover:text-primary-hover"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm transition-colors hover:border-primary/40 hover:bg-primary-tint hover:text-primary-hover"
               >
+                <CategoryIcon slug={category.slug} />
                 {category.name}
               </Link>
             ))}

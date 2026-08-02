@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { updateProviderProfile } from "@/app/actions/provider-profile";
 import { Button } from "@/components/ui/button";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { Category, Comuna, ProviderPublicProfile } from "@/types/domain";
@@ -84,6 +85,7 @@ export function ProviderProfileForm({
                 value={category.id}
                 defaultChecked={selectedCategoryIds.has(category.id)}
               />
+              <CategoryIcon slug={category.slug} className="h-4 w-4 text-muted" />
               {category.name}
             </label>
           ))}

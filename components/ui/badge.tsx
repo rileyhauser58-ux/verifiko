@@ -22,7 +22,7 @@ export function Badge({ children, variant = "default" }: BadgeProps) {
   }
 
   return (
-    <span className="inline-flex items-center rounded-full bg-primary-tint px-2.5 py-1 text-xs font-medium text-primary-hover">
+    <span className="inline-flex items-center gap-1 rounded-full bg-primary-tint px-2.5 py-1 text-xs font-medium text-primary-hover">
       {children}
     </span>
   );

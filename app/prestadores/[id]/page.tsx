@@ -9,6 +9,7 @@ import { getCurrentUserProfile } from "@/lib/dal";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { StarRating } from "@/components/ui/star-rating";
 import { EmergencyButton } from "@/components/providers/emergency-button";
 import { ReportButton } from "@/components/providers/report-button";
@@ -88,7 +89,10 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
 
       <div className="mt-4 flex flex-wrap gap-1.5">
         {provider.categories.map((c) => (
-          <Badge key={c.id}>{c.name}</Badge>
+          <Badge key={c.id}>
+            <CategoryIcon slug={c.slug} className="h-3.5 w-3.5" />
+            {c.name}
+          </Badge>
         ))}
       </div>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { StarRating } from "@/components/ui/star-rating";
 import type { ProviderCardData } from "@/types/domain";
 
@@ -35,7 +36,10 @@ export function ProviderCard({ provider }: { provider: ProviderCardData }) {
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {provider.categories.map((c) => (
-            <Badge key={c.id}>{c.name}</Badge>
+            <Badge key={c.id}>
+              <CategoryIcon slug={c.slug} className="h-3.5 w-3.5" />
+              {c.name}
+            </Badge>
           ))}
         </div>
 
