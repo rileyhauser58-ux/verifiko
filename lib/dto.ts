@@ -373,13 +373,51 @@ export async function getProviderPendingItemsDTO(
   providerId: string
 ): Promise<PendingItem[]> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("service_requests")
-    .select("id, status, scheduled_at, profiles!inner(full_name)")
-    .eq("provider_id", providerId)
-    .in("status", ["pending", "accepted"]);
 
-  if (!data) return [];
+  const [{ data }, { data: providerData }] = await Promise.all([
+    supabase
+      .from("service_requests")
+      .select("id, status, scheduled_at, profiles!inner(full_name)")
+      .eq("provider_id", providerId)
+      .in("status", ["pending", "accepted"]),
+    supabase
+      .from("provider_profiles")
+      .select("bio, verified, provider_categories(category_id), provider_zones(comuna_id)")
+      .eq("id", providerId)
+      .maybeSingle(),
+  ]);
+
+  const items: PendingItem[] = [];
+
+  const provider = providerData as unknown as {
+    bio: string | null;
+    verified: boolean;
+    provider_categories: { category_id: number }[];
+    provider_zones: { comuna_id: number }[];
+  } | null;
+
+  const profileIncomplete =
+    !provider ||
+    !provider.bio ||
+    provider.provider_categories.length === 0 ||
+    provider.provider_zones.length === 0;
+
+  if (profileIncomplete) {
+    items.push({
+      type: "incomplete_profile",
+      label:
+        "Completa tu perfil para generar más confianza y conseguir clientes",
+      href: "/panel/perfil",
+    });
+  } else if (!provider.verified) {
+    items.push({
+      type: "unverified",
+      label: "Verifica tu identidad para destacar en las búsquedas",
+      href: "/panel/verificacion",
+    });
+  }
+
+  if (!data) return items;
 
   const rows = data as unknown as Array<{
     id: string;
@@ -387,8 +425,6 @@ export async function getProviderPendingItemsDTO(
     scheduled_at: string | null;
     profiles: { full_name: string } | null;
   }>;
-
-  const items: PendingItem[] = [];
 
   const pendingCount = rows.filter((r) => r.status === "pending").length;
   if (pendingCount > 0) {

@@ -13,9 +13,21 @@ export async function Navbar() {
           <Logo />
         </Link>
         <nav className="hidden items-center gap-6 text-sm sm:flex">
-          <Link href="/buscar" className="font-medium text-foreground/80 hover:text-primary">
-            Buscar prestadores
-          </Link>
+          {profile?.role === "provider" ? (
+            <Link
+              href="/panel/perfil"
+              className="font-medium text-foreground/80 hover:text-primary"
+            >
+              Consigue clientes
+            </Link>
+          ) : (
+            <Link
+              href="/buscar"
+              className="font-medium text-foreground/80 hover:text-primary"
+            >
+              Buscar prestadores
+            </Link>
+          )}
         </nav>
         <UserMenu profile={profile} />
       </div>

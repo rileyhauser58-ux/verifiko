@@ -39,14 +39,19 @@ export default async function PanelPage() {
 
       {profile.role === "provider" ? (
         <Card className="mt-6">
-          <h2 className="font-semibold">Completa tu perfil</h2>
+          <h2 className="font-semibold">Consigue más clientes</h2>
           <p className="mt-1 text-sm text-muted">
-            Agrega tu descripción, rubros y comunas para que los usuarios te
-            encuentren en las búsquedas.
+            Un perfil completo, con tus rubros, comunas y la insignia de
+            verificado, genera mucha más confianza — y más solicitudes.
           </p>
-          <Link href="/panel/perfil" className="mt-4 inline-block">
-            <Button>Editar mi perfil</Button>
-          </Link>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link href="/panel/perfil">
+              <Button>Completa tu perfil</Button>
+            </Link>
+            <Link href="/panel/verificacion">
+              <Button variant="secondary">Verifica tu identidad</Button>
+            </Link>
+          </div>
         </Card>
       ) : (
         <Card className="mt-6">

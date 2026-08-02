@@ -97,7 +97,12 @@ export type ChatMessage = {
 };
 
 export type PendingItem = {
-  type: "pending_response" | "upcoming" | "awaiting_review";
+  type:
+    | "pending_response"
+    | "upcoming"
+    | "awaiting_review"
+    | "incomplete_profile"
+    | "unverified";
   label: string;
   href: string;
 };
