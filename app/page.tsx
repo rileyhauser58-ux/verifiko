@@ -3,6 +3,7 @@ import { getAllCategories } from "@/lib/dto";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CategoryIcon } from "@/components/ui/category-icon";
+import { Reveal } from "@/components/ui/reveal";
 
 const FEATURES = [
   {
@@ -65,78 +66,94 @@ export default async function Home() {
         />
 
         <div className="relative mx-auto max-w-4xl px-4 py-24 text-center">
-          <span className="inline-flex items-center rounded-full bg-primary-tint px-4 py-1.5 text-xs font-medium text-primary-hover">
+          <span className="animate-fade-up inline-flex items-center rounded-full bg-primary-tint px-4 py-1.5 text-xs font-medium text-primary-hover">
             Servicios para el hogar, con confianza
           </span>
 
-          <h1 className="mx-auto mt-5 max-w-2xl font-serif text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          <h1
+            className="animate-fade-up mx-auto mt-5 max-w-2xl font-serif text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+            style={{ animationDelay: "90ms" }}
+          >
             Encuentra a la persona indicada para tu hogar
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
+          <p
+            className="animate-fade-up mx-auto mt-4 max-w-xl text-lg text-muted"
+            style={{ animationDelay: "180ms" }}
+          >
             Gasfiters, electricistas, maestros y más — con calificaciones
             reales de otros usuarios para que contrates con seguridad.
           </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/buscar">
+          <div
+            className="animate-fade-up mt-8 flex flex-col justify-center gap-3 sm:flex-row"
+            style={{ animationDelay: "270ms" }}
+          >
+            <Link href="/registro">
               <Button className="w-full sm:w-auto">
-                Buscar prestadores
+                Ofrece tus servicios
                 <span aria-hidden="true">→</span>
               </Button>
             </Link>
-            <Link href="/registro">
+            <Link href="/buscar">
               <Button variant="secondary" className="w-full sm:w-auto">
-                Ofrece tus servicios
+                Buscar prestadores
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-4xl px-4 pb-16">
-        <div className="grid gap-4 sm:grid-cols-3">
-          {FEATURES.map((feature) => (
-            <Card key={feature.title}>
-              <div
-                className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                  feature.tone === "trust"
-                    ? "bg-trust-tint text-trust"
-                    : "bg-primary-tint text-primary-hover"
-                }`}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  className="h-5 w-5"
-                >
-                  {feature.icon}
-                </svg>
-              </div>
-              <h3 className="mt-3 font-semibold">{feature.title}</h3>
-              <p className="mt-1 text-sm text-muted">{feature.description}</p>
-            </Card>
-          ))}
         </div>
       </section>
 
       {categories.length > 0 && (
-        <section className="mx-auto max-w-4xl px-4 pb-24">
-          <h2 className="mb-4 text-lg font-semibold">Rubros disponibles</h2>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/buscar?categoria=${category.slug}`}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm transition-colors hover:border-primary/40 hover:bg-primary-tint hover:text-primary-hover"
-              >
-                <CategoryIcon slug={category.slug} />
-                {category.name}
-              </Link>
+        <section className="mx-auto max-w-5xl px-4 pb-16">
+          <Reveal>
+            <h2 className="mb-5 text-lg font-semibold">Rubros disponibles</h2>
+          </Reveal>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {categories.map((category, i) => (
+              <Reveal key={category.id} delay={i * 50}>
+                <Link
+                  href={`/buscar?categoria=${category.slug}`}
+                  className="group flex h-full flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft-hover"
+                >
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-tint text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
+                    <CategoryIcon slug={category.slug} className="h-7 w-7" />
+                  </span>
+                  <span className="font-medium">{category.name}</span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </section>
       )}
+
+      <section className="mx-auto max-w-4xl px-4 pb-24">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {FEATURES.map((feature, i) => (
+            <Reveal key={feature.title} delay={i * 80}>
+              <Card className="h-full">
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                    feature.tone === "trust"
+                      ? "bg-trust-tint text-trust"
+                      : "bg-primary-tint text-primary-hover"
+                  }`}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    className="h-5 w-5"
+                  >
+                    {feature.icon}
+                  </svg>
+                </div>
+                <h3 className="mt-3 font-semibold">{feature.title}</h3>
+                <p className="mt-1 text-sm text-muted">{feature.description}</p>
+              </Card>
+            </Reveal>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
