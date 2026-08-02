@@ -12,16 +12,6 @@ export async function Navbar() {
         <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
           <Logo />
         </Link>
-        {profile?.role !== "provider" && (
-          <nav className="hidden items-center gap-6 text-sm sm:flex">
-            <Link
-              href="/buscar"
-              className="font-medium text-foreground/70 transition-colors hover:text-primary"
-            >
-              Buscar prestadores
-            </Link>
-          </nav>
-        )}
         <div className="ml-auto">
           <UserMenu profile={profile} />
         </div>

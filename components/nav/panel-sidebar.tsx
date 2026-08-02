@@ -6,6 +6,7 @@ import type { UserRole } from "@/types/domain";
 
 const CLIENT_LINKS = [
   { href: "/panel", label: "Resumen" },
+  { href: "/buscar", label: "Buscar prestadores" },
   { href: "/panel/solicitudes", label: "Solicitudes" },
   { href: "/panel/agenda", label: "Agenda" },
   { href: "/panel/historial", label: "Historial" },
