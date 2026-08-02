@@ -179,6 +179,12 @@ export default async function Home() {
       </section>
 
       <section className="mx-auto max-w-4xl px-4 pt-4 pb-24">
+        <Reveal>
+          <h2 className="mb-1.5 text-lg font-semibold">Por qué elegir Verifiko</h2>
+          <p className="mb-6 text-sm text-muted">
+            Herramientas pensadas para que contrates con la cabeza tranquila.
+          </p>
+        </Reveal>
         <div className="grid gap-4 sm:grid-cols-3">
           {FEATURES.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 80}>
