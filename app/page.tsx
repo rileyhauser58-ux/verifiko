@@ -69,7 +69,7 @@ export default async function Home() {
             Servicios para el hogar, con confianza
           </span>
 
-          <h1 className="mx-auto mt-5 max-w-2xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          <h1 className="mx-auto mt-5 max-w-2xl font-serif text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
             Encuentra a la persona indicada para tu hogar
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted">

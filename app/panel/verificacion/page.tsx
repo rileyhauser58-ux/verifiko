@@ -20,7 +20,7 @@ export default async function VerificacionPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Verificación de identidad</h1>
+      <h1 className="font-serif text-2xl font-semibold">Verificación de identidad</h1>
       <p className="mt-1 text-muted">
         Sube tus documentos para que revisemos tu identidad a mano y activemos
         la insignia de &ldquo;Verificado&rdquo; en tu perfil. Solo tú puedes

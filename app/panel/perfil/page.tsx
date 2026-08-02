@@ -24,7 +24,7 @@ export default async function PerfilPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Tu perfil de prestador</h1>
+      <h1 className="font-serif text-2xl font-semibold">Tu perfil de prestador</h1>
       <p className="mt-1 text-muted">
         Esta información es la que ven los usuarios cuando te buscan.
       </p>

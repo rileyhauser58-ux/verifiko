@@ -54,7 +54,7 @@ export default async function HistorialPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">
+      <h1 className="font-serif text-2xl font-semibold">
         {profile.role === "provider" ? "Historial de clientes" : "Historial de prestadores"}
       </h1>
 

@@ -21,7 +21,7 @@ export default async function SolicitudesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">
+      <h1 className="font-serif text-2xl font-semibold">
         {profile.role === "provider" ? "Solicitudes recibidas" : "Mis solicitudes"}
       </h1>
 

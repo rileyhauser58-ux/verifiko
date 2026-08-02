@@ -32,7 +32,7 @@ export function Logo({ size = 28 }: { size?: number }) {
   return (
     <span className="inline-flex items-center gap-2">
       <LogoMark size={size} />
-      <span className="text-lg font-semibold">Verifiko</span>
+      <span className="font-serif text-lg font-semibold">Verifiko</span>
     </span>
   );
 }

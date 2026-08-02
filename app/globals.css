@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0b1520;
-  --foreground: #edf1f4;
-  --primary: #3f6e96;
-  --primary-hover: #4f83ad;
+  --background: #f7f3ea;
+  --foreground: #2b2621;
+  --primary: #15304c;
+  --primary-hover: #1e3f5e;
   --primary-foreground: #ffffff;
-  --primary-tint: rgba(63, 110, 150, 0.18);
+  --primary-tint: rgba(21, 48, 76, 0.07);
   --trust: #3fae9a;
-  --trust-tint: rgba(63, 174, 154, 0.18);
-  --border: #223244;
-  --muted: #93a2ad;
-  --card: #101e2c;
-  --rating: #f0a020;
-  --shadow-color: 210 60% 2%;
+  --trust-tint: rgba(63, 174, 154, 0.12);
+  --border: #e7e0d3;
+  --muted: #8b8172;
+  --card: #ffffff;
+  --rating: #bb8a4b;
+  --shadow-color: 30 25% 20%;
 }
 
 @theme inline {
@@ -30,6 +30,7 @@
   --color-card: var(--card);
   --color-rating: var(--rating);
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
   --shadow-soft: 0 1px 2px hsl(var(--shadow-color) / 0.06), 0 4px 12px hsl(var(--shadow-color) / 0.08);
   --shadow-soft-hover: 0 2px 4px hsl(var(--shadow-color) / 0.08), 0 12px 24px hsl(var(--shadow-color) / 0.14);
 }
@@ -52,10 +53,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(38rem 30rem at 18% -8%, rgba(63, 110, 150, 0.28), transparent 60%),
-    radial-gradient(34rem 28rem at 88% 8%, rgba(63, 174, 154, 0.16), transparent 60%),
-    radial-gradient(40rem 34rem at 50% 110%, rgba(63, 110, 150, 0.14), transparent 65%);
+  background: radial-gradient(48rem 30rem at 50% -12%, rgba(21, 48, 76, 0.05), transparent 65%);
 }
 
 ::selection {

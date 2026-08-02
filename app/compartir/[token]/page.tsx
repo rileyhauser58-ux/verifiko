@@ -13,7 +13,7 @@ export default async function CompartirPage({ params }: CompartirPageProps) {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-xl font-semibold">Ubicación en vivo</h1>
+      <h1 className="font-serif text-xl font-semibold">Ubicación en vivo</h1>
 
       {!share || !share.active ? (
         <p className="mt-4 text-sm text-muted">

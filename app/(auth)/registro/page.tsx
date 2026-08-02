@@ -7,7 +7,7 @@ export const metadata = {
 export default function RegistroPage() {
   return (
     <div>
-      <h1 className="mb-6 text-center text-xl font-semibold">
+      <h1 className="mb-6 text-center font-serif text-xl font-semibold">
         Crea tu cuenta
       </h1>
       <SignupForm />

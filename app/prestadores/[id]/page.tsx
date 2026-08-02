@@ -61,7 +61,7 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
         <div className="flex items-center gap-4">
           <Avatar src={provider.avatar_url} name={displayName} size={64} />
           <div>
-            <h1 className="text-2xl font-semibold">{displayName}</h1>
+            <h1 className="font-serif text-2xl font-semibold">{displayName}</h1>
             <p className="text-sm text-muted">{provider.full_name}</p>
           </div>
         </div>

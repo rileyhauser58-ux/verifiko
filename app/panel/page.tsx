@@ -23,7 +23,7 @@ export default async function PanelPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Hola, {profile.full_name}</h1>
+      <h1 className="font-serif text-2xl font-semibold">Hola, {profile.full_name}</h1>
 
       <div className="mt-6">
         <AvatarUpload

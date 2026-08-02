@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { Navbar } from "@/components/nav/navbar";
 import { Footer } from "@/components/nav/footer";
 import "leaflet/dist/leaflet.css";
@@ -7,6 +7,11 @@ import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
 });
 
@@ -25,7 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="es"
+      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>

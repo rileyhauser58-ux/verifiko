@@ -7,7 +7,7 @@ export const metadata = {
 export default function IngresarPage() {
   return (
     <div>
-      <h1 className="mb-6 text-center text-xl font-semibold">
+      <h1 className="mb-6 text-center font-serif text-xl font-semibold">
         Ingresa a tu cuenta
       </h1>
       <LoginForm />

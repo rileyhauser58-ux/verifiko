@@ -70,7 +70,7 @@ export default async function AgendaPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Mi agenda</h1>
+      <h1 className="font-serif text-2xl font-semibold">Mi agenda</h1>
 
       {groups.length === 0 ? (
         <p className="mt-6 text-sm text-muted">
