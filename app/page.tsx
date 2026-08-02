@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { getAllCategories } from "@/lib/dto";
 import { Button } from "@/components/ui/button";
@@ -145,24 +146,39 @@ export default async function Home() {
 
       <section className="mx-auto max-w-4xl px-4 pb-16">
         <Reveal>
-          <h2 className="mb-5 text-lg font-semibold">Cómo funciona</h2>
+          <h2 className="mb-6 text-lg font-semibold">Cómo funciona</h2>
         </Reveal>
-        <div className="grid gap-6 sm:grid-cols-3">
-          {STEPS.map((step, i) => (
-            <Reveal key={step.title} delay={i * 90}>
-              <div className="relative">
-                <span className="font-serif flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                  {i + 1}
-                </span>
-                <h3 className="mt-3 font-semibold">{step.title}</h3>
-                <p className="mt-1 text-sm text-muted">{step.description}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <div className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
+            <div className="hidden items-center sm:flex">
+              {STEPS.map((step, i) => (
+                <Fragment key={step.title}>
+                  <span className="font-serif flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                    {i + 1}
+                  </span>
+                  {i < STEPS.length - 1 && (
+                    <div className="mx-3 h-0.5 flex-1 bg-border" />
+                  )}
+                </Fragment>
+              ))}
+            </div>
+
+            <div className="mt-5 grid gap-6 sm:mt-4 sm:grid-cols-3">
+              {STEPS.map((step, i) => (
+                <div key={step.title}>
+                  <span className="font-serif mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground sm:hidden">
+                    {i + 1}
+                  </span>
+                  <h3 className="font-semibold">{step.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 pb-24">
+      <section className="mx-auto max-w-4xl px-4 pt-4 pb-24">
         <div className="grid gap-4 sm:grid-cols-3">
           {FEATURES.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 80}>
