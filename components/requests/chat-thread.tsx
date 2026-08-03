@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { sendMessage } from "@/app/actions/messages";
+import { markMessagesRead, sendMessage } from "@/app/actions/messages";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -56,6 +56,16 @@ export function ChatThread({
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (messages.some((m) => m.sender_id !== currentUserId)) {
+      markMessagesRead(requestId);
+    }
+    // Solo al montar y cuando cambia la conversación: no queremos volver a
+    // marcar como leído cada vez que llega un mensaje nuevo por Realtime
+    // mientras el usuario tiene la pestaña abierta en otra parte.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestId]);
 
   useEffect(() => {
     if (wasPending.current && !pending && !state?.errors && !state?.message) {

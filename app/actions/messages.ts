@@ -45,3 +45,15 @@ export async function sendMessage(
     return { message: "No pudimos enviar tu mensaje. Intenta de nuevo." };
   }
 }
+
+export async function markMessagesRead(requestId: string) {
+  const { user } = await verifySession();
+  const supabase = await createClient();
+
+  await supabase
+    .from("messages")
+    .update({ read_at: new Date().toISOString() })
+    .eq("request_id", requestId)
+    .neq("sender_id", user.id)
+    .is("read_at", null);
+}

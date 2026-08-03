@@ -102,7 +102,8 @@ export type PendingItem = {
     | "upcoming"
     | "awaiting_review"
     | "incomplete_profile"
-    | "unverified";
+    | "unverified"
+    | "unread_messages";
   label: string;
   href: string;
 };

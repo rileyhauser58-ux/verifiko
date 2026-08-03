@@ -369,6 +369,27 @@ export async function getReviewForRequestDTO(requestId: string) {
 
 const UPCOMING_WINDOW_MS = 48 * 60 * 60 * 1000;
 
+async function getUnreadMessagesCount(userId: string): Promise<number> {
+  const supabase = await createClient();
+  const { data: requests } = await supabase
+    .from("service_requests")
+    .select("id")
+    .or(`client_id.eq.${userId},provider_id.eq.${userId}`)
+    .in("status", ["accepted", "completed"]);
+
+  const requestIds = (requests ?? []).map((r) => r.id);
+  if (requestIds.length === 0) return 0;
+
+  const { count } = await supabase
+    .from("messages")
+    .select("id", { count: "exact", head: true })
+    .in("request_id", requestIds)
+    .neq("sender_id", userId)
+    .is("read_at", null);
+
+  return count ?? 0;
+}
+
 export async function getProviderPendingItemsDTO(
   providerId: string
 ): Promise<PendingItem[]> {
@@ -417,6 +438,15 @@ export async function getProviderPendingItemsDTO(
     });
   }
 
+  const unread = await getUnreadMessagesCount(providerId);
+  if (unread > 0) {
+    items.push({
+      type: "unread_messages",
+      label: `Tienes ${unread} ${unread === 1 ? "mensaje" : "mensajes"} sin leer`,
+      href: "/panel/solicitudes",
+    });
+  }
+
   if (!data) return items;
 
   const rows = data as unknown as Array<{
@@ -457,19 +487,31 @@ export async function getClientPendingItemsDTO(
   clientId: string
 ): Promise<PendingItem[]> {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("service_requests")
-    .select(
-      `
+  const [{ data }, unread] = await Promise.all([
+    supabase
+      .from("service_requests")
+      .select(
+        `
       id, status, scheduled_at,
       provider_profiles!inner ( business_name, profiles!inner ( full_name ) ),
       reviews ( id )
     `
-    )
-    .eq("client_id", clientId)
-    .in("status", ["accepted", "completed"]);
+      )
+      .eq("client_id", clientId)
+      .in("status", ["accepted", "completed"]),
+    getUnreadMessagesCount(clientId),
+  ]);
 
-  if (!data) return [];
+  const items: PendingItem[] = [];
+  if (unread > 0) {
+    items.push({
+      type: "unread_messages",
+      label: `Tienes ${unread} ${unread === 1 ? "mensaje" : "mensajes"} sin leer`,
+      href: "/panel/solicitudes",
+    });
+  }
+
+  if (!data) return items;
 
   const rows = data as unknown as Array<{
     id: string;
@@ -482,7 +524,6 @@ export async function getClientPendingItemsDTO(
     reviews: { id: string }[];
   }>;
 
-  const items: PendingItem[] = [];
   const soon = Date.now() + UPCOMING_WINDOW_MS;
 
   for (const r of rows) {

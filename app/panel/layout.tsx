@@ -10,6 +10,7 @@ const REQUEST_ITEM_TYPES = new Set([
   "pending_response",
   "upcoming",
   "awaiting_review",
+  "unread_messages",
 ]);
 
 export default async function PanelLayout({ children }: { children: ReactNode }) {
