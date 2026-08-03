@@ -31,9 +31,19 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Una cookie de sesión corrupta (ej. dos logins a la vez en pestañas
+  // distintas del mismo navegador) puede hacer que getUser() lance en vez
+  // de devolver simplemente "sin usuario". Se trata igual que sin sesión
+  // en vez de tumbar cada página del sitio.
+  let user = null;
+  try {
+    const {
+      data: { user: authUser },
+    } = await supabase.auth.getUser();
+    user = authUser;
+  } catch {
+    user = null;
+  }
 
   const pathname = request.nextUrl.pathname;
   const isProtected = PROTECTED_PREFIXES.some((prefix) =>
