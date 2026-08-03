@@ -21,7 +21,13 @@ const PROVIDER_LINKS = [
   { href: "/panel/verificacion", label: "Verificación" },
 ];
 
-export function PanelSidebar({ role }: { role: UserRole }) {
+export function PanelSidebar({
+  role,
+  requestsBadge = 0,
+}: {
+  role: UserRole;
+  requestsBadge?: number;
+}) {
   const pathname = usePathname();
   const links = role === "provider" ? PROVIDER_LINKS : CLIENT_LINKS;
 
@@ -37,13 +43,18 @@ export function PanelSidebar({ role }: { role: UserRole }) {
           <Link
             key={link.href}
             href={link.href}
-            className={`shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            className={`shrink-0 flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
               active
                 ? "bg-primary-tint text-primary-hover"
                 : "text-foreground/70 hover:bg-primary-tint/60 hover:text-primary-hover"
             }`}
           >
             {link.label}
+            {link.href === "/panel/solicitudes" && requestsBadge > 0 && (
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-trust px-1.5 text-xs font-semibold text-white">
+                {requestsBadge}
+              </span>
+            )}
           </Link>
         );
       })}
