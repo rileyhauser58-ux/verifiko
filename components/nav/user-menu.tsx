@@ -8,7 +8,9 @@ export function UserMenu({ profile }: { profile: Profile | null }) {
     return (
       <div className="flex items-center gap-2">
         <Link href="/ingresar">
-          <Button variant="ghost">Ingresar</Button>
+          <Button variant="ghost" className="!text-background hover:!bg-white/10">
+            Ingresar
+          </Button>
         </Link>
         <Link href="/registro">
           <Button variant="primary">Crear cuenta</Button>
