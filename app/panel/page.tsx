@@ -32,8 +32,8 @@ export default async function PanelPage() {
   const profileComplete =
     !!providerProfile &&
     !!providerProfile.bio &&
-    providerProfile.categories.length > 0 &&
-    providerProfile.comunas.length > 0;
+    (providerProfile.categories ?? []).length > 0 &&
+    (providerProfile.comunas ?? []).length > 0;
 
   return (
     <div>
@@ -80,7 +80,7 @@ export default async function PanelPage() {
                 </p>
               )}
 
-              {providerProfile.categories.length > 0 && (
+              {(providerProfile.categories ?? []).length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {providerProfile.categories.map((c) => (
                     <Badge key={c.id}>
@@ -91,7 +91,7 @@ export default async function PanelPage() {
                 </div>
               )}
 
-              {providerProfile.comunas.length > 0 && (
+              {(providerProfile.comunas ?? []).length > 0 && (
                 <p className="mt-3 text-xs text-muted">
                   Atiende en {providerProfile.comunas.map((c) => c.name).join(", ")}
                 </p>

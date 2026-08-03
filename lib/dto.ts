@@ -54,10 +54,10 @@ function toProviderCard(row: ProviderRow): ProviderPublicProfile {
     review_count: row.review_count,
     completed_jobs: 0,
     years_experience: row.years_experience,
-    categories: row.provider_categories
+    categories: (row.provider_categories ?? [])
       .map((pc) => pc.categories)
       .filter((c): c is Category => c !== null),
-    comunas: row.provider_zones
+    comunas: (row.provider_zones ?? [])
       .map((pz) => pz.comunas)
       .filter((c): c is Comuna => c !== null),
   };
@@ -420,8 +420,8 @@ export async function getProviderPendingItemsDTO(
   const profileIncomplete =
     !provider ||
     !provider.bio ||
-    provider.provider_categories.length === 0 ||
-    provider.provider_zones.length === 0;
+    (provider.provider_categories ?? []).length === 0 ||
+    (provider.provider_zones ?? []).length === 0;
 
   if (profileIncomplete) {
     items.push({
@@ -544,7 +544,7 @@ export async function getClientPendingItemsDTO(
       });
     }
 
-    if (r.status === "completed" && r.reviews.length === 0) {
+    if (r.status === "completed" && (r.reviews ?? []).length === 0) {
       items.push({
         type: "awaiting_review",
         label: `Deja tu reseña para ${name}`,
