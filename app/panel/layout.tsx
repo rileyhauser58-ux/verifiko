@@ -9,7 +9,6 @@ import { PanelSidebar } from "@/components/nav/panel-sidebar";
 const REQUEST_ITEM_TYPES = new Set([
   "pending_response",
   "upcoming",
-  "awaiting_review",
   "unread_messages",
 ]);
 

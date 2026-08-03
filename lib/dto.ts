@@ -375,7 +375,7 @@ async function getUnreadMessagesCount(userId: string): Promise<number> {
     .from("service_requests")
     .select("id")
     .or(`client_id.eq.${userId},provider_id.eq.${userId}`)
-    .in("status", ["accepted", "completed"]);
+    .eq("status", "accepted");
 
   const requestIds = (requests ?? []).map((r) => r.id);
   if (requestIds.length === 0) return 0;
@@ -493,12 +493,11 @@ export async function getClientPendingItemsDTO(
       .select(
         `
       id, status, scheduled_at,
-      provider_profiles!inner ( business_name, profiles!inner ( full_name ) ),
-      reviews ( id )
+      provider_profiles!inner ( business_name, profiles!inner ( full_name ) )
     `
       )
       .eq("client_id", clientId)
-      .in("status", ["accepted", "completed"]),
+      .eq("status", "accepted"),
     getUnreadMessagesCount(clientId),
   ]);
 
@@ -521,7 +520,6 @@ export async function getClientPendingItemsDTO(
       business_name: string | null;
       profiles: { full_name: string } | null;
     } | null;
-    reviews: { id: string }[];
   }>;
 
   const soon = Date.now() + UPCOMING_WINDOW_MS;
@@ -532,22 +530,10 @@ export async function getClientPendingItemsDTO(
       r.provider_profiles?.profiles?.full_name ??
       "un prestador";
 
-    if (
-      r.status === "accepted" &&
-      r.scheduled_at &&
-      new Date(r.scheduled_at).getTime() <= soon
-    ) {
+    if (r.scheduled_at && new Date(r.scheduled_at).getTime() <= soon) {
       items.push({
         type: "upcoming",
         label: `Trabajo agendado con ${name}`,
-        href: `/panel/solicitudes/${r.id}`,
-      });
-    }
-
-    if (r.status === "completed" && (r.reviews ?? []).length === 0) {
-      items.push({
-        type: "awaiting_review",
-        label: `Deja tu reseña para ${name}`,
         href: `/panel/solicitudes/${r.id}`,
       });
     }
