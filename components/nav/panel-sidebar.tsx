@@ -18,6 +18,7 @@ const PROVIDER_LINKS = [
   { href: "/panel/agenda", label: "Agenda" },
   { href: "/panel/historial", label: "Historial" },
   { href: "/panel/perfil", label: "Mi perfil" },
+  { href: "/panel/certificaciones", label: "Certificaciones" },
   { href: "/panel/verificacion", label: "Verificación" },
 ];
 

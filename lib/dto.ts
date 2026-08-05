@@ -7,6 +7,7 @@ import type {
   LocationShareInfo,
   PendingItem,
   ProviderCardData,
+  ProviderCertification,
   ProviderPublicProfile,
   ProviderSearchFilters,
   RequestStatus,
@@ -552,6 +553,21 @@ export async function getVerificationDocumentsDTO(
     .from("verification_documents")
     .select("document_type, status")
     .eq("provider_id", providerId);
+
+  return data ?? [];
+}
+
+// Certificaciones profesionales: a diferencia de verification_documents,
+// son públicas (se muestran en el perfil del prestador).
+export async function getProviderCertificationsDTO(
+  providerId: string
+): Promise<ProviderCertification[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("provider_certifications")
+    .select("id, title, issuer, file_url, created_at")
+    .eq("provider_id", providerId)
+    .order("created_at", { ascending: false });
 
   return data ?? [];
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   getActiveRequestDTO,
+  getProviderCertificationsDTO,
   getProviderPublicProfileDTO,
   getProviderReviewsDTO,
 } from "@/lib/dto";
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { StarRating } from "@/components/ui/star-rating";
+import { CertificationBadges } from "@/components/providers/certification-badges";
 import { EmergencyButton } from "@/components/providers/emergency-button";
 import { ReportButton } from "@/components/providers/report-button";
 import { ReviewList } from "@/components/providers/review-list";
@@ -45,9 +47,10 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
 
   if (!provider) notFound();
 
-  const [reviews, profile] = await Promise.all([
+  const [reviews, profile, certifications] = await Promise.all([
     getProviderReviewsDTO(id),
     getCurrentUserProfile(),
+    getProviderCertificationsDTO(id),
   ]);
 
   const activeRequest =
@@ -109,6 +112,8 @@ export default async function ProviderProfilePage({ params }: ProviderPageProps)
           {provider.years_experience === 1 ? "año" : "años"} de experiencia
         </p>
       )}
+
+      <CertificationBadges certifications={certifications} />
 
       {provider.bio && <p className="mt-6 leading-relaxed">{provider.bio}</p>}
 

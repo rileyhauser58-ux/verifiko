@@ -125,6 +125,14 @@ export type VerificationDocument = {
   status: DocumentStatus;
 };
 
+export type ProviderCertification = {
+  id: string;
+  title: string;
+  issuer: string | null;
+  file_url: string;
+  created_at: string;
+};
+
 export type ReportReason =
   | "unsafe_behavior"
   | "no_show"
