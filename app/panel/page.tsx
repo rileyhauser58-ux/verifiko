@@ -2,11 +2,14 @@ import Link from "next/link";
 import { getCurrentUserProfile } from "@/lib/dal";
 import {
   getClientPendingItemsDTO,
+  getClientServiceRequestsDTO,
   getProviderPendingItemsDTO,
   getProviderPublicProfileDTO,
 } from "@/lib/dto";
+import { groupByCounterpart } from "@/lib/history";
 import { AvatarUpload } from "@/components/providers/avatar-upload";
 import { PendingItems } from "@/components/panel/pending-items";
+import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,19 +18,29 @@ import { StarRating } from "@/components/ui/star-rating";
 
 export const metadata = { title: "Mi panel" };
 
+const RECENT_PROVIDERS_LIMIT = 3;
+
 export default async function PanelPage() {
   const profile = await getCurrentUserProfile();
 
   if (!profile) return null;
 
-  const [pendingItems, providerProfile] = await Promise.all([
+  const [pendingItems, providerProfile, clientRequests] = await Promise.all([
     profile.role === "provider"
       ? getProviderPendingItemsDTO(profile.id)
       : getClientPendingItemsDTO(profile.id),
     profile.role === "provider"
       ? getProviderPublicProfileDTO(profile.id)
       : Promise.resolve(null),
+    profile.role === "client"
+      ? getClientServiceRequestsDTO(profile.id)
+      : Promise.resolve([]),
   ]);
+
+  const recentProviders = groupByCounterpart(clientRequests).slice(
+    0,
+    RECENT_PROVIDERS_LIMIT
+  );
 
   const profileComplete =
     !!providerProfile &&
@@ -136,15 +149,59 @@ export default async function PanelPage() {
           )}
         </>
       ) : (
-        <Card className="mt-6">
-          <h2 className="font-semibold">Encuentra un prestador</h2>
-          <p className="mt-1 text-sm text-muted">
-            Busca gasfiters, electricistas y más cerca de ti.
-          </p>
-          <Link href="/buscar" className="mt-4 inline-block">
-            <Button>Buscar prestadores</Button>
-          </Link>
-        </Card>
+        <>
+          {recentProviders.length > 0 && (
+            <Card className="mt-6">
+              <h2 className="font-semibold">Tus prestadores</h2>
+              <p className="mt-1 text-sm text-muted">
+                Gente con la que ya trabajaste — rápido de volver a contactar.
+              </p>
+              <div className="mt-4 space-y-3">
+                {recentProviders.map((entry) => (
+                  <div
+                    key={entry.counterpart_id}
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        src={entry.counterpart_avatar_url}
+                        name={entry.counterpart_name}
+                        size={40}
+                      />
+                      <div>
+                        <p className="text-sm font-medium">{entry.counterpart_name}</p>
+                        <p className="text-xs text-muted">
+                          {entry.completed_requests}{" "}
+                          {entry.completed_requests === 1 ? "trabajo" : "trabajos"}{" "}
+                          completado{entry.completed_requests === 1 ? "" : "s"}
+                        </p>
+                      </div>
+                    </div>
+                    <Link href={`/prestadores/${entry.counterpart_id}`}>
+                      <Button variant="secondary">Ver perfil</Button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+              <Link
+                href="/panel/historial"
+                className="mt-4 inline-block text-sm text-primary hover:underline"
+              >
+                Ver todo tu historial →
+              </Link>
+            </Card>
+          )}
+
+          <Card className="mt-6">
+            <h2 className="font-semibold">Encuentra un prestador</h2>
+            <p className="mt-1 text-sm text-muted">
+              Busca gasfiters, electricistas y más cerca de ti.
+            </p>
+            <Link href="/buscar" className="mt-4 inline-block">
+              <Button>Buscar prestadores</Button>
+            </Link>
+          </Card>
+        </>
       )}
     </div>
   );
