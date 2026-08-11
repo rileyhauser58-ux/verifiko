@@ -70,11 +70,15 @@ export default async function AgendaPage() {
 
   return (
     <div>
-      <h1 className="font-serif text-2xl font-semibold">Mi agenda</h1>
+      <h1 className="font-serif text-2xl font-semibold">
+        {profile.role === "provider" ? "Mi agenda" : "Tus servicios agendados"}
+      </h1>
 
       {groups.length === 0 ? (
         <p className="mt-6 text-sm text-muted">
-          No tienes trabajos agendados por ahora.
+          {profile.role === "provider"
+            ? "No tienes trabajos agendados por ahora."
+            : "No tienes servicios agendados por ahora."}
         </p>
       ) : (
         <div className="mt-6 space-y-8">
